@@ -1,18 +1,9 @@
 
 
 //Variable for # of wins
-var wins = 0; 
+var wins = 0;
 var guessesLeft = 12;
 var lettersGuessed = [];
-
-/* Display the following: 
-    "Press any key to get started!"
-    "Wins: "
-    (the word like this -->) '- - - - - - -'
-    as the user guesses correctly, reveal them ^^
-    "Number of Guesses Remaining: "
-    "Letters Already Guessed: ('L Z Y H [example])" */
-
 
 //create the main phrases 
 var phraseArray = ['kenny', 'cartman', 'stan', 'kyle', 'tweek', 'mrgarrison', 'randy', 'chef', 'token', 'butters', 'wendy', 'pcprincipal', 'jimmy', 'ike', 'mrmackey', 'towelie', 'officerbarbrady'];
@@ -26,20 +17,29 @@ var dashes = '';
 for (var i = 0; i < phraseChoice.length; i++) {
     dashes += '-';
 }
-console.log(dashes);
+document.querySelector("#dashes").textContent = dashes; 
 
-    //listen for player's letter input
-    //If player guess is part of phrase, display it as shown above
+
+//listen for player's letter input
+document.onkeyup = function(event) {
+    var playerGuess = event.key.toLowerCase();
     //If player guess is not part of phrase, display it in "Letters already guessed"
-    //Remove 1 from "Number of Guesses Remaining" if incorrect
-    //Restart the game if "Number of Guesses Remaining" is 0, or if player wins
-    //Display img/sound when the user wins 
-    //Add 1 to Wins if the player wins
+    if (phraseChoice.indexOf(playerGuess) < 0 ){
+        //add the guessed letter to lettersGuessed array
+        lettersGuessed.push(playerGuess);
+    }    
+    //Create display for guessed letters via .join
+    displayLettersGuessed = lettersGuessed.join(' ');
 
-    var html = "<p> Press any key to get started! </p>" +
-    "<p> Wins: " + wins + "</p>" +
-    "<p>" + dashes + "</p>" + 
-    "<p> Number of Guesses Remaining: " + guessesLeft + "</p>" + 
-    "<p> Letters Already Guessed: " + lettersGuessed + "</p>";
+//If player guess is part of phrase, display it as shown above
 
-document.querySelector('#container').innerHTML = html; 
+//Remove 1 from "Number of Guesses Remaining" if incorrect
+//Restart the game if "Number of Guesses Remaining" is 0, or if player wins
+//Display img/sound when the user wins 
+//Add 1 to Wins if the player wins
+
+//variable references to HTML file
+document.querySelector("#wins").textContent = wins;
+document.querySelector("#dashes").textContent = dashes; 
+document.querySelector("#guessesLeft").textContent = guessesLeft; 
+document.querySelector("#displayLettersGuessed").textContent = displayLettersGuessed; }
