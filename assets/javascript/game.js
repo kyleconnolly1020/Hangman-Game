@@ -29,26 +29,60 @@ document.onkeyup = function (event) {
 
     //If player guess is not part of phrase, display it in "Letters already guessed"
     if (phraseChoice.indexOf(playerGuess) < 0) {
-        console.log(phraseChoice.indexOf(playerGuess));
+        if(!lettersGuessed.includes(playerGuess)){
         //add the guessed letter to lettersGuessed array
         lettersGuessed.push(playerGuess);
         //Remove 1 from guessesLeft
-        guessesLeft--; 
-    } else {
-        dashes.splice(phraseChoice.indexOf(playerGuess),1,playerGuess); 
+        guessesLeft--; }
+    } else { //If player guess is part of phrase, display it as shown above
+        for(var i = 0; i < phraseChoice.length; i++){
+        if (phraseChoice[i] === playerGuess){
+        dashes.splice(i,1,playerGuess);
+        }
     }
+    }
+
+    //convert the dashes array to a string 
+    dashString = dashes.join('');
+    
+    //Restart the game if "Number of Guesses Remaining" is 0, or if player wins
+
+    //If they win: 
+    if (dashString === phraseChoice){
+        wins++; 
+        alert("You Win! Correct Phrase: " + phraseChoice);
+        guessesLeft = 12;
+        lettersGuessed = [];
+        dashes = [];
+        phraseChoice = phraseArray[Math.floor(Math.random() * phraseArray.length)];
+        for (var i = 0; i < phraseChoice.length; i++) {
+            dashes.push('-');}
+        console.log(phraseChoice);
+        console.log(dashes);
+    }
+    
+    //If they lose:
+    if (guessesLeft === 0) {
+        alert("Better Luck Next Time! Correct Phrase: " + phraseChoice);
+        guessesLeft = 12;
+        lettersGuessed = [];
+        dashes = [];
+        phraseChoice = phraseArray[Math.floor(Math.random() * phraseArray.length)];
+        for (var i = 0; i < phraseChoice.length; i++) {
+            dashes.push('-');}
+        console.log(phraseChoice);
+        console.log(dashes);
+    }
+
+    console.log(dashes);
+
     //Create display for guessed letters via .join
     displayLettersGuessed = lettersGuessed.join(' ');
 
-    //If player guess is part of phrase, display it as shown above
-
-    //Remove 1 from "Number of Guesses Remaining" if incorrect
-    //Restart the game if "Number of Guesses Remaining" is 0, or if player wins
     //Display img/sound when the user wins 
-    //Add 1 to Wins if the player wins
 
     //variable references to HTML file
     document.querySelector("#wins").textContent = wins;
-    document.querySelector("#dashes").textContent = dashesDisplay;
+    document.querySelector("#dashes").textContent = dashes.join(' ');
     document.querySelector("#guessesLeft").textContent = guessesLeft;
     document.querySelector("#displayLettersGuessed").textContent = displayLettersGuessed;}
