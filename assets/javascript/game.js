@@ -29,10 +29,13 @@ document.onkeyup = function (event) {
 
     //If player guess is not part of phrase, display it in "Letters already guessed"
     if (phraseChoice.indexOf(playerGuess) < 0) {
+        console.log(phraseChoice.indexOf(playerGuess));
         //add the guessed letter to lettersGuessed array
         lettersGuessed.push(playerGuess);
+        //Remove 1 from guessesLeft
+        guessesLeft--; 
     } else {
-        dashes.splice(phraseChoice.indexOf(playerGuess),playerGuess); 
+        dashes.splice(phraseChoice.indexOf(playerGuess),1,playerGuess); 
     }
     //Create display for guessed letters via .join
     displayLettersGuessed = lettersGuessed.join(' ');
